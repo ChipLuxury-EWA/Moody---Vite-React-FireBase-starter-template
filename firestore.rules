@@ -1,0 +1,90 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions for validation
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner() {
+      return request.auth.uid == resource.data.authorId;
+    }
+    
+    function isValidUser() {
+      return isAuthenticated() && request.auth.uid != null && request.auth.uid.size() > 0;
+    }
+    
+    function isValidPostData() {
+      let data = request.resource.data;
+      return data.keys().hasAll(['title', 'content', 'author', 'authorId', 'mood', 'createdAt']) &&
+             data.title is string &&
+             data.title.size() > 0 &&
+             data.title.size() <= 200 &&
+             data.content is string &&
+             data.content.size() > 0 &&
+             data.content.size() <= 5000 &&
+             data.author is string &&
+             data.author.size() > 0 &&
+             data.author.size() <= 100 &&
+             data.authorId is string &&
+             data.authorId == request.auth.uid &&
+             data.mood is string &&
+             data.mood.size() > 0 &&
+             data.mood.size() <= 10 &&
+             data.createdAt == request.time &&
+             // Optional privacy field validation
+             (!data.keys().hasAny(['isPrivate']) || data.isPrivate is bool);
+    }
+    
+    function isValidPostUpdate() {
+      let data = request.resource.data;
+      let existingData = resource.data;
+      // Ensure critical fields aren't changed during update
+      return data.authorId == existingData.authorId &&
+             data.createdAt == existingData.createdAt &&
+             data.author == existingData.author &&
+                   // Allow updates to these fields (title, content, mood, updatedAt, and optionally isPrivate)
+      data.keys().hasAll(['title', 'content', 'mood', 'updatedAt']) &&
+             data.title is string &&
+             data.title.size() > 0 &&
+             data.title.size() <= 200 &&
+             data.content is string &&
+             data.content.size() > 0 &&
+             data.content.size() <= 5000 &&
+             data.mood is string &&
+             data.mood.size() > 0 &&
+             data.mood.size() <= 10 &&
+             data.updatedAt == request.time &&
+             // Optional privacy field validation
+             (!data.keys().hasAny(['isPrivate']) || data.isPrivate is bool);
+    }
+
+    // Posts collection rules
+    match /posts/{postId} {
+      // Allow read if posts are public - unsigned users could also see the posts
+      allow read: if (isAuthenticated() && resource.data.authorId == request.auth.uid) ||
+                     (resource.data.isPrivate == false || !('isPrivate' in resource.data));
+      
+      // Allow create if user is authenticated and data is valid
+      allow create: if isValidUser() && isValidPostData();
+      
+      // Allow update only if user owns the post and update data is valid
+      allow update: if isValidUser() && isOwner() && isValidPostUpdate();
+      
+      // Allow delete only if user owns the post
+      allow delete: if isValidUser() && isOwner();
+    }
+    
+    // Users collection (if you add user profiles later)
+    match /users/{userId} {
+      // Users can read and write their own profile
+      allow read, write: if isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Deny all other requests
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+} 

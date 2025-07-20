@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+/* PWA and Mobile Optimizations */
+html {
+  /* Prevent zoom on double tap */
+  touch-action: manipulation;
+  /* Enable smooth scrolling */
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900;
+  /* Prevent overscroll bounce on iOS */
+  overscroll-behavior: none;
+  /* Better font rendering on mobile */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* Ensure no horizontal scroll */
+  overflow-x: hidden;
+}
+
+/* PWA safe area support */
+@supports (padding: max(0px)) {
+  .safe-area-inset-top {
+    padding-top: max(env(safe-area-inset-top), 1rem);
+  }
+  
+  .safe-area-inset-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom), 1rem);
+  }
+}
+
+/* Mobile-first responsive design utilities */
+
+/* Button hover states for mobile */
+@media (hover: none) {
+  button:hover {
+    transform: none !important;
+  }
+}
+
+/* Focus styles for better accessibility */
+button:focus-visible {
+  @apply ring-2 ring-blue-500 ring-offset-2 ring-offset-gray-900;
+}
+
+/* Smooth transitions for better UX */
+* {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Improve touch targets on mobile */
+@media (max-width: 640px) {
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
