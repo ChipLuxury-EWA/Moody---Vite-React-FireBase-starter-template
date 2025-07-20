@@ -108,6 +108,9 @@ const MainPage = () => {
             </Link>
           </Button>
           <Button
+            onClick={() => {
+              window.open("https://github.com/ChipLuxury-EWA/Moody---Vite-React-FireBase-starter-template", "_blank");
+            }}
             variant="outline"
             size="lg"
             className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto border-gray-600 text-gray-200 hover:bg-gray-800"

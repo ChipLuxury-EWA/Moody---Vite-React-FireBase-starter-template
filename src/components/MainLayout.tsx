@@ -23,7 +23,10 @@ export const MainLayout: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* PWA-aware header with safe area for notch */}
-      <header className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-700/50" style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+      <header
+        className="sticky top-0 z-50 bg-gray-900/90 backdrop-blur-md border-b border-gray-700/50"
+        style={{ paddingTop: "env(safe-area-inset-top)" }}
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-14 sm:h-16">
             {/* Logo */}
@@ -77,7 +80,7 @@ export const MainLayout: React.FC = () => {
                 <div className="flex items-center space-x-2 ml-4">
                   <Badge variant="secondary" className="text-green-400 border-green-400/50 hidden lg:flex">
                     <User className="w-3 h-3 mr-1" />
-                    {user.displayName || user.email?.split('@')[0]}
+                    {user.displayName || user.email?.split("@")[0]}
                   </Badge>
                   {user.photoURL && (
                     <img
@@ -100,12 +103,7 @@ export const MainLayout: React.FC = () => {
             </nav>
 
             {/* Mobile menu button */}
-            <Button
-              variant="ghost"
-              size="sm"
-              className="md:hidden text-white hover:bg-gray-700"
-              onClick={toggleMobileMenu}
-            >
+            <Button variant="ghost" size="sm" className="md:hidden text-white hover:bg-gray-700" onClick={toggleMobileMenu}>
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </Button>
           </div>
@@ -157,7 +155,7 @@ export const MainLayout: React.FC = () => {
                     <div className="flex items-center space-x-2 mb-3 px-3">
                       <Badge variant="secondary" className="text-green-400 border-green-400/50">
                         <User className="w-3 h-3 mr-1" />
-                        {user.displayName || user.email?.split('@')[0]}
+                        {user.displayName || user.email?.split("@")[0]}
                       </Badge>
                       {user.photoURL && (
                         <img
@@ -183,11 +181,14 @@ export const MainLayout: React.FC = () => {
         </div>
       </header>
 
-      <main className="flex-1" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <main className="flex-1" style={{ paddingBottom: "env(safe-area-inset-bottom)" }}>
         <Outlet />
       </main>
 
-      <footer className="bg-gray-900/50 border-t border-gray-700/50 mt-16" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
+      <footer
+        className="bg-gray-900/50 border-t border-gray-700/50 mt-16"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col sm:flex-row items-center justify-between space-y-4 sm:space-y-0">
             <div className="flex items-center space-x-2">
@@ -195,7 +196,14 @@ export const MainLayout: React.FC = () => {
               <span className="text-gray-300">Moody PWA</span>
             </div>
             <div className="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-4">
-              <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-gray-400 hover:text-white"
+                onClick={() => {
+                  window.open("https://github.com/ChipLuxury-EWA", "_blank");
+                }}
+              >
                 <Github className="w-4 h-4 mr-2" />
                 GitHub
               </Button>

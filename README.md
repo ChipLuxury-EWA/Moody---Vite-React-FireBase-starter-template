@@ -37,7 +37,7 @@ A modern, production-ready starter template built with **Firebase**, **Vite**, *
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/ChipLuxury-EWA/Moody---Vite-React-FireBase-starter-template.git
 cd moody
 
 # Install dependencies
