@@ -2,6 +2,8 @@
 
 A modern, production-ready starter template built with **Firebase**, **Vite**, **React 19**, **TypeScript**, and **TailwindCSS**. Features comprehensive SEO optimization, PWA capabilities, and Firebase authentication.
 
+You can try it out live: [Moody](https://moody-14c6d.web.app/)
+
 ## ✨ Features
 
 ### 🔥 Modern Tech Stack
@@ -37,7 +39,7 @@ A modern, production-ready starter template built with **Firebase**, **Vite**, *
 
 ```bash
 # Clone the repository
-git clone https://github.com/ChipLuxury-EWA/Moody---Vite-React-FireBase-starter-template.git
+git clone https://github.com/ChipLuxury-EWA/Moody-Vite.React.FireBase.starter-template.git
 cd moody
 
 # Install dependencies
